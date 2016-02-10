@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="A:\API\Android SDK\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jar="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-41f25c89fdeccffe13be4c3e597efcf1aa1b1f64.jar" />
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-5e62306dc17a9e433616ff731a3a230c0486c9c3.jar" />
     </item>
     <item
         jar="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
@@ -16,18 +16,18 @@
         <dex dex="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\pre-dexed\debug\classes-dac584a99ca55d4fd1c7bbe9b786a724f4bef849.jar" />
     </item>
     <item
-        jar="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-5e62306dc17a9e433616ff731a3a230c0486c9c3.jar" />
-    </item>
-    <item
         jar="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
         <dex dex="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\pre-dexed\debug\classes-1fe584e3c884ab5176edf052f9a729e708862e1a.jar" />
+    </item>
+    <item
+        jar="A:\API\Android SDK\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="C:\Users\IDcLxViI\Documents\Programming Files\ANDROID\Practices\PrivateSMS\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-41f25c89fdeccffe13be4c3e597efcf1aa1b1f64.jar" />
     </item>
 
 </items>

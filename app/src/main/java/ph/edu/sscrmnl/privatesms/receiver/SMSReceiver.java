@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import ph.edu.sscrmnl.privatesms.databasemodel.ModelContacts;
@@ -118,7 +120,7 @@ public class SMSReceiver extends BroadcastReceiver {
                         }else{
                             // Updating wont fail most probably but will be leaving this Log here
                             // just in case some unexpected event arise
-                            Log.i(TAG, "Updating conversation failed!");
+                            Log.i(TAG, "WARNING LINE 121 SMS RECEIVER: Updating conversation failed!");
                         }
 
                     }else{
@@ -175,7 +177,7 @@ public class SMSReceiver extends BroadcastReceiver {
                     ,null)){
                 Log.i(TAG, "SUCCESSFULLY SAVED SMS RECEIVED TO DATABASE!");
 
-                /*
+
                 Log.i(TAG, "Enumerating all SMS");
                 Object[] test = DB.selectAll(Tables.sms, ModelSMS.class, null);
                 for (Object o: test) {
@@ -193,7 +195,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
 
                 }
-                 */
+
             }else{
                 Log.i(TAG, "FAILED TO SAVE SMS RECEIVED TO DATABASE!");
             }
