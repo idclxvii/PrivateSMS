@@ -62,6 +62,7 @@ public class SMSListActivity extends AppCompatActivity implements OnDataUpdateLi
                                             ModelConversation[].class))
                     )
             );
+            adapter.sortAscending();
             listview.setAdapter(adapter);
 
             // Hold listview elements to invoke conversation deletion
@@ -248,7 +249,10 @@ public class SMSListActivity extends AppCompatActivity implements OnDataUpdateLi
     public void onStart() {
         super.onStart();
         if (null != refreshReceiver) {
-            registerReceiver(refreshReceiver, new IntentFilter(RefreshAdapterReceiver.REFRESH_ADAPTER));
+            IntentFilter i = new IntentFilter();
+            i.addAction(RefreshAdapterReceiver.REFRESH_ALL_ADAPTERS);
+            i.addAction(RefreshAdapterReceiver.REFRESH_CONVERSATIONS_ADAPTER);
+            registerReceiver(refreshReceiver, i);
         }
     }
 
@@ -267,11 +271,21 @@ public class SMSListActivity extends AppCompatActivity implements OnDataUpdateLi
 
     @Override
     public void onStop() {
+        /*
         if (null != refreshReceiver) {
             unregisterReceiver(refreshReceiver);
         }
+        */
         super.onStop();
 
+    }
+
+    @Override
+    public void onDestroy(){
+        if (null != refreshReceiver) {
+            unregisterReceiver(refreshReceiver);
+        }
+        super.onDestroy();
     }
 
     @Override

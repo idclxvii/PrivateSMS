@@ -69,6 +69,26 @@ public class SMSActivity extends AppCompatActivity implements OnDataUpdateListen
         } catch (Exception e) {}
 
 
+        try {
+            //  public ModelConversation(Integer id, String add, Integer num, Long datetime)
+
+            // requery
+            ModelConversation cc = (ModelConversation) DB.select(Tables.conversation, ModelConversation.class,
+                    new Object[][] { {"id" , c.getId()} }
+                    ,null);
+            if(DB.update(Tables.conversation, cc,
+                    new ModelConversation(cc.getId(), cc.getAddress(), 0,
+                            cc.getLastMod()), null)){
+                Log.i(TAG, "Conversation successfully updated");
+
+               // might invoke infinite looping / broadcast; it's a TRAAAAAP !
+                sendBroadcast(new Intent(RefreshAdapterReceiver.REFRESH_CONVERSATIONS_ADAPTER));
+            }else{
+                Log.i(TAG, "Conversation FAILED to update");
+            }
+
+        }catch(Exception e){}
+
         listview.setSelection(listview.getCount() - 1);
     }
 
@@ -110,6 +130,20 @@ public class SMSActivity extends AppCompatActivity implements OnDataUpdateListen
                     e.printStackTrace();
                 }
 
+                // save the last mod
+                try {
+                    //  public ModelConversation(Integer id, String add, Integer num, Long datetime)
+                    if(DB.update(Tables.conversation, c,
+                            new ModelConversation(c.getId(), c.getAddress(), 0,
+                                    (Long) System.currentTimeMillis()), null)){
+                        Log.i(TAG, "Conversation successfully updated");
+                        sendBroadcast(new Intent(RefreshAdapterReceiver.REFRESH_ALL_ADAPTERS));
+                    }else{
+                        Log.i(TAG, "Conversation FAILED to update");
+                    }
+
+                }catch(Exception e){}
+
                 inputSMS.setText("");
                 refreshListView();
             }
@@ -117,6 +151,7 @@ public class SMSActivity extends AppCompatActivity implements OnDataUpdateListen
 
         listview = (ListView) findViewById(R.id.listViewSMS);
         refreshListView();
+
 
     }
 
@@ -140,9 +175,9 @@ public class SMSActivity extends AppCompatActivity implements OnDataUpdateListen
             //  public ModelConversation(Integer id, String add, Integer num, Long datetime)
             if(DB.update(Tables.conversation, c,
                     new ModelConversation(c.getId(), c.getAddress(), 0,
-                            (Long)  System.currentTimeMillis()), null)){
+                            c.getLastMod()), null)){
                 Log.i(TAG, "Conversation successfully updated");
-                sendBroadcast(new Intent(RefreshAdapterReceiver.REFRESH_ADAPTER));
+                sendBroadcast(new Intent(RefreshAdapterReceiver.REFRESH_ALL_ADAPTERS));
             }else{
                 Log.i(TAG, "Conversation FAILED to update");
             }
@@ -159,7 +194,7 @@ public class SMSActivity extends AppCompatActivity implements OnDataUpdateListen
     public void onStart() {
         super.onStart();
         if (null != refreshReceiver) {
-            registerReceiver(refreshReceiver, new IntentFilter(RefreshAdapterReceiver.REFRESH_ADAPTER));
+            registerReceiver(refreshReceiver, new IntentFilter(RefreshAdapterReceiver.REFRESH_ALL_ADAPTERS));
         }
     }
 
@@ -177,13 +212,23 @@ public class SMSActivity extends AppCompatActivity implements OnDataUpdateListen
 
     @Override
     public void onStop() {
+        /*
         if (null != refreshReceiver) {
             unregisterReceiver(refreshReceiver);
         }
+        */
         super.onStop();
 
     }
 
+    @Override
+    public void onDestroy(){
+        if (null != refreshReceiver) {
+            unregisterReceiver(refreshReceiver);
+        }
+        super.onDestroy();
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

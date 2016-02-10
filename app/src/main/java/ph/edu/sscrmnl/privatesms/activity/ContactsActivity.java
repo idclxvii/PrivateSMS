@@ -48,15 +48,17 @@ public class ContactsActivity extends AppCompatActivity {
 
         try{
             Object[] res = DB.selectAll(Tables.contacts, ModelContacts.class, null);
+
             adapter = new ContactsAdapter(this, android.R.layout.simple_list_item_1,
                     // database query here
-
                     new ArrayList<ModelContacts>(
-                            Arrays.asList(
-                                    Arrays.copyOf(res, res.length,
-                                            ModelContacts[].class))
-                                   )
+                                    Arrays.asList(
+                                            Arrays.copyOf(res, res.length,
+                                                    ModelContacts[].class))
+                                    )
                     );
+            // sort adapter contents
+            adapter.sortAscending();
             listview.setAdapter(adapter);
 
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -271,6 +273,7 @@ public class ContactsActivity extends AppCompatActivity {
         }catch (Exception e){
 
         }
+
     }
 
     private void initializeLayout() {

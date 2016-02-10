@@ -10,6 +10,8 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ph.edu.sscrmnl.privatesms.databasemodel.ModelContacts;
@@ -113,6 +115,21 @@ public class ContactsAdapter extends ArrayAdapter<ModelContacts> implements Filt
 
 
         };
+    }
+
+    public void sortAscending () {
+
+        Collections.sort(filteredData, new Comparator<ModelContacts>() {
+            @Override
+            public int compare(ModelContacts lhs, ModelContacts rhs) {
+
+                return lhs.getName().compareTo(rhs.getName());
+            }
+
+                /* This comparator will sort AppDetail objects alphabetically. */
+
+
+        });
     }
 
     public int getCount()

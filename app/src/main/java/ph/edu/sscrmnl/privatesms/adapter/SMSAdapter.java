@@ -57,56 +57,57 @@ public class SMSAdapter extends ArrayAdapter<ModelSMS> implements Filterable{
         // Check if an existing view is being reused, otherwise inflate the view
 
         View vi = convertView;
-        if (vi == null)
-            vi =LayoutInflater.from(getContext()).inflate(
+        if (vi == null) {
+            vi = LayoutInflater.from(getContext()).inflate(
                     sms.getType() == ModelSMS.SMS_RECEIVED ?
                             R.layout.sms_received_row :
                             R.layout.sms_sent_row
                     , parent, false);
             //vi =LayoutInflater.from(getContext()).inflate(layoutResourceId, parent, false);
+            // differentiate rendering according to sms type
+            if(sms.getType() == ModelSMS.SMS_RECEIVED) {
+                // this sms is received
 
-        // differentiate rendering according to sms type
-        if(sms.getType() == ModelSMS.SMS_RECEIVED) {
-            // this sms is received
+                // SMS Body
+                TextView body = (TextView) vi.findViewById(R.id.txtSMSReceivedBody);
+                body.setText(sms.getBody());
 
-            // SMS Body
-            TextView body = (TextView) vi.findViewById(R.id.txtSMSReceivedBody);
-            body.setText(sms.getBody());
+                // SMS datetime
+                TextView datetime = (TextView) vi.findViewById(R.id.txtSMSReceivedDatetime);
+                datetime.setText(new SimpleDateFormat("EEE MMM dd yyyy hh:mm aaa",
+                        Locale.getDefault()).format(sms.getDatetime().longValue()));
 
-            // SMS datetime
-            TextView datetime = (TextView) vi.findViewById(R.id.txtSMSReceivedDatetime);
-            datetime.setText(new SimpleDateFormat("EEE MMM dd yyyy hh:mm aaa",
-                    Locale.getDefault()).format(sms.getDatetime().longValue()));
+            }else{
+                // this sms is sent
 
-        }else{
-            // this sms is sent
+                // default bg #92d5ff #d3d3d3 if fail
 
-            // default bg #92d5ff #d3d3d3 if fail
-
-            LinearLayout layout = (LinearLayout) vi.findViewById(R.id.layoutSMSSent);
-            layout.setBackgroundColor(sms.getStatus() == ModelSMS.SMS_STATUS_SEND_SUCCESS ?
-                    // we can use 0xff<hexa w/o #> for code swag: #d3d3d3 => 0xffd3d3d3
-                    Color.parseColor("#92d5ff") : Color.parseColor("#d3d3d3"));
+                LinearLayout layout = (LinearLayout) vi.findViewById(R.id.layoutSMSSent);
+                layout.setBackgroundColor(sms.getStatus() == ModelSMS.SMS_STATUS_SEND_SUCCESS ?
+                        // we can use 0xff<hexa w/o #> for code swag: #d3d3d3 => 0xffd3d3d3
+                        Color.parseColor("#92d5ff") : Color.parseColor("#d3d3d3"));
 
 
-            // SMS Body
-            TextView body = (TextView) vi.findViewById(R.id.txtSMSSentBody);
-            body.setText(sms.getBody());
+                // SMS Body
+                TextView body = (TextView) vi.findViewById(R.id.txtSMSSentBody);
+                body.setText(sms.getBody());
 
-            // SMS datetime
-            TextView datetime = (TextView) vi.findViewById(R.id.txtSMSSentDatetime);
-            datetime.setText(
-                    // sms sending status success
-                    sms.getStatus() == ModelSMS.SMS_STATUS_SEND_SUCCESS ?
-                            "Sent: " + new SimpleDateFormat("EEE MMM dd yyyy hh:mm aaa",
-                                    Locale.getDefault()).format(sms.getDatetime().longValue())
+                // SMS datetime
+                TextView datetime = (TextView) vi.findViewById(R.id.txtSMSSentDatetime);
+                datetime.setText(
+                        // sms sending status success
+                        sms.getStatus() == ModelSMS.SMS_STATUS_SEND_SUCCESS ?
+                                "Sent: " + new SimpleDateFormat("EEE MMM dd yyyy hh:mm aaa",
+                                        Locale.getDefault()).format(sms.getDatetime().longValue())
 
-                            :
-                            // sms sending status failed
-                            "Failed to send: " + new SimpleDateFormat("EEE MMM dd yyyy hh:mm aaa",
-                                    Locale.getDefault()).format(sms.getDatetime().longValue())
+                                :
+                                // sms sending status failed
+                                "Failed to send: " + new SimpleDateFormat("EEE MMM dd yyyy hh:mm aaa",
+                                        Locale.getDefault()).format(sms.getDatetime().longValue())
 
-            );
+                );
+
+            }
 
         }
 

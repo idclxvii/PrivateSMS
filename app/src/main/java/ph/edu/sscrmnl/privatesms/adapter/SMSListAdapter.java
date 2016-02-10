@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,9 +61,10 @@ public class SMSListAdapter extends ArrayAdapter<ModelConversation> implements F
         // Check if an existing view is being reused, otherwise inflate the view
 
         View vi = convertView;
-        if (vi == null)
-            vi =LayoutInflater.from(getContext()).inflate(layoutResourceId, parent, false);
+        if (vi == null) {
+            vi = LayoutInflater.from(getContext()).inflate(layoutResourceId, parent, false);
 
+        }
         // img
         ImageView img = (ImageView) vi.findViewById(R.id.imgSMSList);
         img.setImageResource(R.drawable.img0);
@@ -180,6 +183,22 @@ public class SMSListAdapter extends ArrayAdapter<ModelConversation> implements F
         };
     }
 
+    public void sortAscending () {
+
+        Collections.sort(filteredData, new Comparator<ModelConversation>() {
+            @Override
+            public int compare(ModelConversation lhs, ModelConversation rhs) {
+
+
+                //return Long.compare(lhs.getLastMod(), rhs.getLastMod());
+                return  Long.valueOf(rhs.getLastMod()).compareTo(Long.valueOf(lhs.getLastMod()));
+            }
+
+                /* This comparator will sort AppDetail objects alphabetically. */
+
+
+        });
+    }
     public int getCount()
     {
         return filteredData.size();

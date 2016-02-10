@@ -7,17 +7,15 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
 import ph.edu.sscrmnl.privatesms.databasemodel.ModelContacts;
 import ph.edu.sscrmnl.privatesms.databasemodel.ModelConversation;
 import ph.edu.sscrmnl.privatesms.databasemodel.ModelSMS;
 import ph.edu.sscrmnl.privatesms.databasemodel.Tables;
+import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
 
 /**
  * Created by IDcLxViI on 11/26/2015.
@@ -92,6 +90,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
                         // update the conversation's count and lastmod
 
+                        /*
                         Log.i(TAG, "Conversation's value before update: " +
                                         "id=" + conversation.getId() +
                                         "address=" + conversation.getAddress() +
@@ -99,13 +98,14 @@ public class SMSReceiver extends BroadcastReceiver {
                                         "lastmod=" + conversation.getLastMod() +
                                         " " + new SimpleDateFormat("EEE MMM dd yyyy hh:mm aaa", Locale.getDefault()).format(conversation.getLastMod().longValue())
                         );
+                        */
                         if(DB.update(Tables.conversation,conversation,
                                 new ModelConversation(conversation.getId(), conversation.getAddress(),
                                         conversation.getCount() + 1 , (Long) currentDatetime),
                                 null)){
                             conversation = (ModelConversation) DB.select(Tables.conversation, ModelConversation.class,
                                     new Object[][] { {"address", sender} }, null);
-
+                            /*
                             Log.i(TAG, "Conversation's value after update: " +
                                             "id=" + conversation.getId() +
                                             "address=" + conversation.getAddress() +
@@ -113,6 +113,7 @@ public class SMSReceiver extends BroadcastReceiver {
                                             "lastmod=" + conversation.getLastMod() +
                                             " " + new SimpleDateFormat("EEE MMM dd yyyy hh:mm aaa", Locale.getDefault()).format(conversation.getLastMod().longValue())
                             );
+                            */
 
                         }else{
                             // Updating wont fail most probably but will be leaving this Log here
@@ -136,7 +137,8 @@ public class SMSReceiver extends BroadcastReceiver {
                     saveMessage(conversation, smsBody);
 
                     // send refresh broadcast on adapters
-                    context.sendBroadcast(new Intent(RefreshAdapterReceiver.REFRESH_ADAPTER));
+                    Log.i(TAG, "Broadcasting REFRESH_ADAPTERS");
+                    context.sendBroadcast(new Intent(RefreshAdapterReceiver.REFRESH_ALL_ADAPTERS));
 
                 }else {
 
@@ -173,6 +175,7 @@ public class SMSReceiver extends BroadcastReceiver {
                     ,null)){
                 Log.i(TAG, "SUCCESSFULLY SAVED SMS RECEIVED TO DATABASE!");
 
+                /*
                 Log.i(TAG, "Enumerating all SMS");
                 Object[] test = DB.selectAll(Tables.sms, ModelSMS.class, null);
                 for (Object o: test) {
@@ -190,6 +193,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
 
                 }
+                 */
             }else{
                 Log.i(TAG, "FAILED TO SAVE SMS RECEIVED TO DATABASE!");
             }

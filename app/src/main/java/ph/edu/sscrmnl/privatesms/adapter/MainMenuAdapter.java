@@ -48,8 +48,10 @@ public class MainMenuAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View vi = convertView;
-        if (vi == null)
+        if (vi == null) {
             vi = inflater.inflate(R.layout.main_menu_row, null);
+        }
+
         ImageView img = (ImageView) vi.findViewById(R.id.img);
         switch (position){
             case 0:

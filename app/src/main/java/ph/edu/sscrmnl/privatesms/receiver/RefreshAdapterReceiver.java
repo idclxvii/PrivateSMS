@@ -6,7 +6,10 @@ import android.content.Intent;
 
 public class RefreshAdapterReceiver extends BroadcastReceiver {
 
-    public static final String REFRESH_ADAPTER = "REFRESH_ADAPTER";
+    public static final String REFRESH_ALL_ADAPTERS = "REFRESH_ALL_ADAPTERS";
+    public static final String REFRESH_CONVERSATIONS_ADAPTER = "REFRESH_CONVERSATIONS_ADAPTER";
+
+
     private OnDataUpdateListener mDataUpdateListener = null;
 
 
