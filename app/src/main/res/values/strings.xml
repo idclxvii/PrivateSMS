@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Private SMS</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main_menu_activty">MainMenuActivty</string>
+    <string name="title_activity_contacts">ContactsActivity</string>
+    <string name="title_activity_smslist">SMSListActivity</string>
+    <string name="title_activity_sms">SMSActivity</string>
+</resources>
