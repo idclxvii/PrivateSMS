@@ -3,7 +3,6 @@ package ph.edu.sscrmnl.privatesms.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -28,7 +27,7 @@ import ph.edu.sscrmnl.privatesms.databasemodel.ModelContacts;
 import ph.edu.sscrmnl.privatesms.databasemodel.Tables;
 import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
 
-public class ContactsActivity extends AppCompatActivity {
+public class ContactsActivity extends GlobalBaseActivity {
 
     private SQLiteHelper DB;
 

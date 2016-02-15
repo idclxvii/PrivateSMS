@@ -1,7 +1,11 @@
 package ph.edu.sscrmnl.privatesms.activity;
 
+import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -15,17 +19,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import ph.edu.sscrmnl.privatesms.ApplicationClass;
 import ph.edu.sscrmnl.privatesms.R;
-import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
-import ph.edu.sscrmnl.privatesms.util.Security;
 import ph.edu.sscrmnl.privatesms.databasemodel.ModelConfig;
 import ph.edu.sscrmnl.privatesms.databasemodel.Tables;
+import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
+import ph.edu.sscrmnl.privatesms.util.Security;
 
 public class MainActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private static final boolean LOGCAT = true;
     private final String TAG = this.getClass().getSimpleName();
+
+    private ComponentName LAUNCHER_COMPONENT_NAME;
 
     private TextView mainMsg;
     private EditText txtPin;
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements
     private SQLiteHelper DB;
 
     private boolean firstRun = true;
+    private boolean reauth = false;
 
     private synchronized SQLiteHelper getDb(Context context){
         DB = new SQLiteHelper(context);
@@ -99,6 +107,31 @@ public class MainActivity extends AppCompatActivity implements
         btnBack.setVisibility(Button.GONE);
     }
 
+    private void checkIfReauthenticationCall(){
+        if(!reauth)
+            ((ApplicationClass)getApplication()).reset();
+    }
+
+    private boolean isLauncherIconVisible() {
+        int enabledSetting = getPackageManager()
+                .getComponentEnabledSetting(LAUNCHER_COMPONENT_NAME);
+        return enabledSetting != PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+    }
+
+    private void hideLauncherIcon() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Important!");
+        builder.setMessage("To launch the app again, dial phone number *<your pin>.");
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                getPackageManager().setComponentEnabledSetting(LAUNCHER_COMPONENT_NAME,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+            }
+        });
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +140,24 @@ public class MainActivity extends AppCompatActivity implements
 
         DB = getDb(this);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                reauth = false;
+            } else {
+                reauth = extras.getBoolean("reauth");
+            }
+        }
+        checkIfReauthenticationCall();
+
+        /*
+        Disable for now
+
+        LAUNCHER_COMPONENT_NAME = new ComponentName(
+                this, "ph.edu.sscrmnl.privatesms.Launcher");
+
+        hideLauncherIcon();
+        */
 
         initializeLayout();
         try{
@@ -208,8 +259,17 @@ public class MainActivity extends AppCompatActivity implements
                             // start activity here
                             txtPin.setText("");
                             finish();
-                            startActivity(new Intent(this, MainMenuActivty.class)
-                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                            if(reauth){
+                                // reauthenticating
+
+
+                            }else{
+
+                                // not reauthenticating
+                                startActivity(new Intent(this, MainMenuActivty.class)
+                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                            }
+
 
                         }else{
                             Toast.makeText(MainActivity.this, "Incorrect PIN!", Toast.LENGTH_LONG).show();
@@ -245,6 +305,17 @@ public class MainActivity extends AppCompatActivity implements
             Log.d(this.TAG, this.TAG + " onDestroy()");
         }
     }
+
+    @Override
+    public void onBackPressed(){
+        if(reauth){
+            // do nothing
+
+        }else{
+            super.onBackPressed();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

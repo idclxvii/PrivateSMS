@@ -2,7 +2,6 @@ package ph.edu.sscrmnl.privatesms.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,10 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import ph.edu.sscrmnl.privatesms.adapter.MainMenuAdapter;
 import ph.edu.sscrmnl.privatesms.R;
+import ph.edu.sscrmnl.privatesms.adapter.MainMenuAdapter;
 
-public class MainMenuActivty extends AppCompatActivity {
+public class MainMenuActivty extends GlobalBaseActivity {
 
     private ListView listview;
 

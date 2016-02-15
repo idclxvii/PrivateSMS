@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -33,7 +32,7 @@ import ph.edu.sscrmnl.privatesms.receiver.OnDataUpdateListener;
 import ph.edu.sscrmnl.privatesms.receiver.RefreshAdapterReceiver;
 import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
 
-public class SMSListActivity extends AppCompatActivity implements OnDataUpdateListener {
+public class SMSListActivity extends GlobalBaseActivity implements OnDataUpdateListener {
 
     private SQLiteHelper DB;
     private RefreshAdapterReceiver refreshReceiver;

@@ -2,7 +2,6 @@ package ph.edu.sscrmnl.privatesms.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,12 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ph.edu.sscrmnl.privatesms.R;
-import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
-import ph.edu.sscrmnl.privatesms.util.Security;
 import ph.edu.sscrmnl.privatesms.databasemodel.ModelConfig;
 import ph.edu.sscrmnl.privatesms.databasemodel.Tables;
+import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
+import ph.edu.sscrmnl.privatesms.util.Security;
 
-public class ChangePinActivity extends AppCompatActivity implements
+public class ChangePinActivity extends GlobalBaseActivity implements
         View.OnClickListener {
 
     private static final boolean LOGCAT = true;

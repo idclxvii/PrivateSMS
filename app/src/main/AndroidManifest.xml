@@ -5,8 +5,11 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+
 
     <application
+        android:name=".ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,6 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--
+        Comment this first, will be needed later on
+        <activity-alias
+            android:name=".Launcher"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        -->
         <activity
             android:name=".activity.MainMenuActivty"
             android:label="Private SMS: Main Menu" >
@@ -57,6 +71,14 @@
             android:name=".receiver.RefreshAdapterReceiver"
             android:enabled="true"
             android:exported="false" >
+        </receiver>
+        <receiver
+            android:name=".receiver.LaunchAppViaDialReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
         </receiver>
     </application>
 

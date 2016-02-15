@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
@@ -27,7 +26,7 @@ import ph.edu.sscrmnl.privatesms.receiver.OnDataUpdateListener;
 import ph.edu.sscrmnl.privatesms.receiver.RefreshAdapterReceiver;
 import ph.edu.sscrmnl.privatesms.util.SQLiteHelper;
 
-public class SMSActivity extends AppCompatActivity implements OnDataUpdateListener {
+public class SMSActivity extends GlobalBaseActivity implements OnDataUpdateListener {
     private final String TAG = "SMSActivity";
 
     private SQLiteHelper DB;
